@@ -19,10 +19,21 @@
     ],
     "rules": {
         "react/prop-types": 0,
-        "promise/prefer-await-to-then": "error",
         "semi": [
             "error",
+            "only-multiline"
+        ],
+        "comma-dangle": [
+            "error",
             "always"
+        ],
+        "indent": [
+            "error",
+            4
+        ],
+        "react/jsx-indent": [
+            "error",
+            4
         ],
         "curly": [
             "error",

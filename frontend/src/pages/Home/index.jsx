@@ -10,8 +10,8 @@ const Home = () => (
   <>
     <h1>Latest products</h1>
     <Row>
-      {products.map(product => (
-        <Col sm={12} md={6} lg={4} xl={3}>
+      {products.map((product, idx) => (
+        <Col key={idx} sm={12} md={6} lg={4} xl={3}>
           <Product {...product} />
         </Col>
       ))}

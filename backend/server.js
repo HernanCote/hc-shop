@@ -6,17 +6,27 @@ import connectDB from './config/db.js';
 
 import productRoutes from './routes/product.js';
 
+import {
+  errorHandler,
+  notFound,
+} from './middleware/error.js';
+
 dotenv.config();
 
 connectDB();
 
 const app = express();
 
+
+
 app.get('/', (req, res) => {
   res.send('API is running');
 });
 
 app.use('/api/products', productRoutes);
+
+app.use(notFound);
+app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;
 

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
@@ -9,6 +9,7 @@ import {
   ListGroup,
   Card,
   Button,
+  Form,
 } from 'react-bootstrap';
 
 import Rating from '../../components/Rating';
@@ -19,7 +20,10 @@ import Message from '../../components/Message';
 
 const Product = ({
   match,
+  history,
 }) => {
+  const [qty, setQty] = useState(0);
+
   const dispatch = useDispatch();
 
   const productDetails = useSelector(state => state.productDetails);
@@ -28,6 +32,10 @@ const Product = ({
   useEffect(() => {
     dispatch(getProductDetails(match.params.id));
   }, [dispatch, match]);
+
+  const addToCartHandler = () => {
+    history.push(`/cart/${match.params.id}?qty=${qty}`);
+  };
 
   const {
     image,
@@ -91,14 +99,31 @@ const Product = ({
                           <Col>{countInStock > 0 ? 'In Stock' : 'Out Of Stock'}</Col>
                         </Row>
                       </ListGroup.Item>
+                      {product.countInStock > 0 && (
+                        <ListGroup.Item>
+                          <Row>
+                            <Col>Qty</Col>
+                            <Col>
+                              <Form.Control as="select" value={qty} onChange={(e) => setQty(e.target.value)}>
+                                {[...Array(countInStock).keys()].map(x => (
+                                  <option key={x + 1} value={x + 1}>
+                                    {x + 1}
+                                  </option>
+                                ))}
+                              </Form.Control>
+                            </Col>
+                          </Row>
+                        </ListGroup.Item>
+                      )}
                       <ListGroup.Item>
                         <Button
+                          onClick={addToCartHandler}
                           disabled={countInStock === 0}
                           className="btn-block"
                           type="button"
                         >
                           Add To Cart
-                </Button>
+                        </Button>
                       </ListGroup.Item>
                     </ListGroup>
                   </Card>

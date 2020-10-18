@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { Form, Button, Row, Col } from 'react-bootstrap';
+import Joi from 'joi-browser';
 
 import Message from '../../components/Message';
 import Loader from '../../components/Loader';
@@ -13,6 +14,14 @@ const Register = ({
   location,
   history,
 }) => {
+
+  const schema = Joi.object({
+    name: Joi.string().min(3).max(30).required(),
+    email: Joi.string().email().required(),
+    password: Joi.string().required(),
+    confirmPassword: Joi.ref('password'),
+  });
+
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -34,8 +43,20 @@ const Register = ({
 
   const submitHandler = (e) => {
     e.preventDefault();
-    if (password !== confirmPassword) {
-      setMessage('Passwords do not match');
+    const { error } = Joi.validate({
+      name,
+      email,
+      password,
+      confirmPassword,
+    },
+      schema,
+      {
+        abortEarly: false
+      }
+    );
+    if (error) {
+      let errors = error.details.reduce((acc, cur) => acc + cur.message + '. ', '');
+      setMessage(errors);
     } else {
       dispatch(register(name, email, password));
     }

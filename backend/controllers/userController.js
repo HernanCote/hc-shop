@@ -1,8 +1,8 @@
-import asyncHandler from 'express-async-handler';
+const asyncHandler = require('express-async-handler');
 
-import User from '../models/user.js';
+const User = require('../models/user');
 
-import generateToken from '../utils/generateToken.js';
+const generateToken = require('../utils/generateToken');
 
 // @desc    Auth user & get token
 // @route   POST api/users/login
@@ -39,7 +39,37 @@ const getUserProfile = asyncHandler(async (req, res) => {
     });
   } else {
     res.status(404);
-    throw new Error('Invalid email or password');
+    throw new Error('User not found');
+  }
+});
+
+// @desc    Update user profile
+// @route   PUT api/users/profile
+// @access  Private
+const updateUserProfile = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.user._id);
+
+  const { name, email, password } = req.body;
+
+  if (user) {
+    user.name = name || user.name;
+    user.email = email || user.email;
+    if (password) {
+      user.password = password;
+    }
+
+    const updatedUser = await user.save();
+
+    return res.json({
+      _id: updatedUser._id,
+      name: updatedUser.name,
+      email: updatedUser.email,
+      isAdmin: updatedUser.isAdmin,
+      token: generateToken(user._id),
+    });
+  } else {
+    res.status(404);
+    throw new Error('User not found');
   }
 });
 
@@ -74,8 +104,9 @@ const registerUser = asyncHandler(async (req, res) => {
   }
 });
 
-export {
+module.exports = {
   authUser,
   getUserProfile,
+  updateUserProfile,
   registerUser,
 };

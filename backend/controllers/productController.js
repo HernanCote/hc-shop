@@ -1,5 +1,5 @@
-import asyncHandler from 'express-async-handler';
-import Product from '../models/product.js';
+const asyncHandler = require('express-async-handler');
+const Product = require('../models/product');
 
 // @desc    Fetch all products
 // @route   GET api/products
@@ -22,7 +22,7 @@ const getProductById = asyncHandler(async (req, res) => {
   throw new Error('Product not found');
 });
 
-export {
+module.exports = {
   getProducts,
   getProductById,
 };

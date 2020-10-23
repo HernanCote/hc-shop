@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+const mongoose = require('mongoose');
 
 const oderSchema = mongoose.Schema({
   user: {
@@ -70,5 +70,5 @@ const oderSchema = mongoose.Schema({
 
 const Order = mongoose.model('Order', oderSchema);
 
-export default Order;
+module.exports = Order;
 

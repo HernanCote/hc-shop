@@ -15,7 +15,7 @@ const Product = ({
     <Card className="my-3 p-3 rounded">
       <Link to={`/product/${_id}`}>
         <Card.Img
-          src={image}
+          src={image || '/images/not-found.jpg'}
           variant="top"
         />
       </Link>

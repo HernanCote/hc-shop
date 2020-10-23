@@ -1,16 +1,16 @@
-import express from 'express';
-import dotenv from 'dotenv';
-import colors from 'colors';
+const express = require('express');
+const dotenv = require('dotenv');
+const colors = require('colors');
 
-import connectDB from './config/db.js';
+const connectDB = require('./config/db');
 
-import productRoutes from './routes/product.js';
-import userRoutes from './routes/user.js';
+const productRoutes = require('./routes/product');
+const userRoutes = require('./routes/user');
 
-import {
+const {
   errorHandler,
   notFound,
-} from './middleware/error.js';
+} = require('./middleware/error');
 
 dotenv.config();
 

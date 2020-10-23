@@ -73,6 +73,7 @@ const Register = ({
           <Form.Control
             type="name"
             value={name}
+            required
             placeholder="Enter your name"
             onChange={(e) => setName(e.target.value)}
           ></Form.Control>
@@ -82,6 +83,7 @@ const Register = ({
           <Form.Control
             type="email"
             value={email}
+            required
             placeholder="Enter your email"
             onChange={(e) => setEmail(e.target.value)}
           ></Form.Control>

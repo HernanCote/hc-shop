@@ -5,9 +5,9 @@ const {
   getUserProfile,
   updateUserProfile,
   registerUser,
-} = require('../controllers/userController');
+} = require('../../controllers/users');
 
-const { protect } = require('../middleware/auth');
+const { protect } = require('../../middleware/auth');
 
 const router = express.Router();
 

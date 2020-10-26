@@ -14,6 +14,8 @@ import CheckoutSteps from '../../components/CheckoutSteps';
 
 import { createOrder } from '../../actions';
 
+import { addDecimals } from '../../utils';
+
 const PlaceOrder = ({
   history,
 }) => {
@@ -31,8 +33,6 @@ const PlaceOrder = ({
     paymentMethod,
     cartItems,
   } = cart;
-
-  const addDecimals = num => (Math.round(num * 100) / 100).toFixed(2);
 
   // calculate prices
   cart.itemsPrice = addDecimals(cartItems.reduce((acc, item) => acc + item.price * item.qty, 0));

@@ -13,6 +13,7 @@ import Register from './pages/Register';
 import Profile from './pages/Profile';
 import Shipping from './pages/Shipping';
 import Payment from './pages/Payment';
+import PlaceOrder from './pages/PlaceOrder';
 
 const App = () => (
     <Router>
@@ -26,6 +27,7 @@ const App = () => (
                 <Route path="/cart/:id?" component={Cart} />
                 <Route path="/shipping" component={Shipping} />
                 <Route path="/payment" component={Payment} />
+                <Route path="/place-order" component={PlaceOrder} />
                 <Route path="/" component={Home} exact />
             </Container>
         </main>

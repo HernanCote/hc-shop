@@ -12,7 +12,10 @@ import {
 import Message from '../../components/Message';
 import CheckoutSteps from '../../components/CheckoutSteps';
 
-import { createOrder } from '../../actions';
+import {
+  createOrder,
+  resetCartItems,
+} from '../../actions';
 
 import { addDecimals } from '../../utils';
 
@@ -65,6 +68,7 @@ const PlaceOrder = ({
       taxPrice: cart.taxPrice,
       totalPrice: cart.totalPrice,
     }));
+    dispatch(resetCartItems());
   };
 
   return (

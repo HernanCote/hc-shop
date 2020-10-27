@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   Card,
-  Button,
   Row,
   Col,
   ListGroup,
@@ -76,7 +75,6 @@ const Order = ({
   }
 
   const successPaymentHandler = paymentResult => {
-    console.log(paymentResult);
     dispatch(payOrder(orderId, paymentResult));
   };
 

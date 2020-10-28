@@ -108,7 +108,7 @@ const PlaceOrder = ({
                               src={item.image}
                               alt={item.name}
                               fluid
-                              rounded
+                              roundedCircle
                             />
                           </Col>
                           <Col>

@@ -12,7 +12,7 @@ const Product = ({
   numReviews,
   price,
 }) => (
-    <Card className="my-3 p-3 rounded">
+    <Card className="my-3 rounded">
       <Link to={`/product/${_id}`}>
         <Card.Img
           src={image || '/images/not-found.jpg'}

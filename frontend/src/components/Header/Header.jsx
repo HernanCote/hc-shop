@@ -8,6 +8,7 @@ import {
     Nav,
     Container,
     NavDropdown,
+    Badge,
 } from 'react-bootstrap';
 
 import { logout } from '../../actions/userActions';
@@ -18,6 +19,10 @@ const Header = () => {
 
     const userLogin = useSelector(state => state.userLogin);
     const { userInfo } = userLogin;
+
+    const cart = useSelector(state => state.cart);
+    const { cartItems } = cart;
+    const numberOfItemsInCart = cartItems.length;
 
     const logoutHandler = () => {
         dispatch(logout());
@@ -36,7 +41,9 @@ const Header = () => {
                         <Nav className="ml-auto">
                             <LinkContainer to="/cart">
                                 <Nav.Link>
-                                    <i className="fas fa-shopping-cart"></i> Cart
+                                    <i className="fas fa-shopping-cart"></i>
+                                    Cart{' '}
+                                    {numberOfItemsInCart > 0 ? <Badge variant="info" pill>{numberOfItemsInCart}</Badge> : null}
                                 </Nav.Link>
                             </LinkContainer>
                             {userInfo
@@ -61,7 +68,24 @@ const Header = () => {
                                     </LinkContainer>
                                 )
                             }
-
+                            {
+                                userInfo && userInfo.isAdmin && (
+                                    <NavDropdown
+                                        title="Admin"
+                                        id="adminmenu"
+                                    >
+                                        <LinkContainer to="/admin/users">
+                                            <NavDropdown.Item>Users</NavDropdown.Item>
+                                        </LinkContainer>
+                                        <LinkContainer to="/admin/products">
+                                            <NavDropdown.Item>Products</NavDropdown.Item>
+                                        </LinkContainer>
+                                        <LinkContainer to="/admin/orders">
+                                            <NavDropdown.Item>Orders</NavDropdown.Item>
+                                        </LinkContainer>
+                                    </NavDropdown>
+                                )
+                            }
                         </Nav>
                     </Navbar.Collapse>
                 </Container>

@@ -32,13 +32,16 @@ const Home = () => {
           ? (<Message variant="danger">{error}</Message>)
           :
           (
-            <Row>
-              {products.map((product, idx) => (
-                <Col key={idx} sm={12} md={6} lg={4} xl={3}>
-                  <Product {...product} />
-                </Col>
-              ))}
-            </Row>
+            <>
+              {products.length === 0 && <Message variant="info">There are no products at the moment</Message>}
+              <Row>
+                {products.map((product, idx) => (
+                  <Col key={idx} sm={12} md={6} lg={4} xl={3}>
+                    <Product {...product} />
+                  </Col>
+                ))}
+              </Row>
+            </>
           )
       }
     </>

@@ -16,6 +16,7 @@ import Payment from './pages/Payment';
 import PlaceOrder from './pages/PlaceOrder';
 import Order from './pages/Order';
 import Users from './pages/Users';
+import UserEdit from './pages/UserEdit';
 
 const App = () => (
     <Router>
@@ -31,7 +32,8 @@ const App = () => (
                 <Route path="/payment" component={Payment} />
                 <Route path="/place-order" component={PlaceOrder} />
                 <Route path="/order/:id" component={Order} />
-                <Route path="/admin/users" component={Users} />
+                <Route path="/admin/users/:id/edit" component={UserEdit} />
+                <Route path="/admin/users" exact component={Users} />
                 <Route path="/" component={Home} exact />
             </Container>
         </main>

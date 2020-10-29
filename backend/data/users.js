@@ -8,13 +8,13 @@ const users = [
     isAdmin: true,
   },
   {
-    name: 'John Doe',
-    email: 'john@proshop.com',
+    name: 'Hernan Cote',
+    email: 'hernan@proshop.com',
     password: bcrypt.hashSync('12345', 10),
   },
   {
-    name: 'Jane Doe',
-    email: 'jane@proshop.com',
+    name: 'Karen Arias',
+    email: 'karen@proshop.com',
     password: bcrypt.hashSync('12345', 10),
   },
 ];

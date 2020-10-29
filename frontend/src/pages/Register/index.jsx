@@ -117,7 +117,7 @@ const Register = ({
         </Col>
       </Row>
     </FormContainer>
-  )
-}
+  );
+};
 
 export default Register;

@@ -7,6 +7,8 @@ const {
   registerUser,
   getUsers,
   deleteUser,
+  getUserById,
+  updateUser,
 } = require('../../controllers/users');
 
 const {
@@ -28,6 +30,8 @@ router.route('/profile')
   .put(protect, updateUserProfile);
 
 router.route('/:id')
+  .get(protect, isAdmin, getUserById)
+  .put(protect, isAdmin, updateUser)
   .delete(protect, isAdmin, deleteUser);
 
 module.exports = router;

@@ -123,8 +123,52 @@ const deleteUser = asyncHandler(async (req, res) => {
     throw new Error('User was not found');
   }
 
+  if (String(user._id) === String(req.user._id)) {
+    throw new Error('Ops! You cannot delete yourself.');
+  }
+
   await user.remove();
   return res.status(200).json({ message: "User successfully removed" });
+});
+
+// @desc    GET user by id
+// @route   get api/users/id
+// @access  Private/Admin
+const getUserById = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.params.id).select('-password');
+  if (!user) {
+    res.status(404);
+    throw new Error('User was not found');
+  }
+
+  return res.status(200).json(user);
+});
+
+// @desc    Update user
+// @route   PUT api/users/id
+// @access  Private/Admin
+const updateUser = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.params.id);
+
+  const { name, email, isAdmin } = req.body;
+
+  if (user) {
+    user.name = name || user.name;
+    user.email = email || user.email;
+    user.isAdmin = isAdmin;
+
+    const updatedUser = await user.save();
+
+    return res.json({
+      _id: updatedUser._id,
+      name: updatedUser.name,
+      email: updatedUser.email,
+      isAdmin: updatedUser.isAdmin,
+    });
+  } else {
+    res.status(404);
+    throw new Error('User not found');
+  }
 });
 
 module.exports = {
@@ -134,4 +178,6 @@ module.exports = {
   registerUser,
   getUsers,
   deleteUser,
+  getUserById,
+  updateUser,
 };

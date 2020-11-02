@@ -17,6 +17,7 @@ import PlaceOrder from './pages/PlaceOrder';
 import Order from './pages/Order';
 import Users from './pages/Users';
 import UserEdit from './pages/UserEdit';
+import Products from './pages/Products';
 
 const App = () => (
     <Router>
@@ -26,7 +27,7 @@ const App = () => (
                 <Route path="/login" component={Login} />
                 <Route path="/register" component={Register} />
                 <Route path="/profile" component={Profile} />
-                <Route path="/product/:id" component={Product} />
+                <Route path="/products/:id" component={Product} />
                 <Route path="/cart/:id?" component={Cart} />
                 <Route path="/shipping" component={Shipping} />
                 <Route path="/payment" component={Payment} />
@@ -34,6 +35,7 @@ const App = () => (
                 <Route path="/order/:id" component={Order} />
                 <Route path="/admin/users/:id/edit" component={UserEdit} />
                 <Route path="/admin/users" exact component={Users} />
+                <Route path="/admin/products" component={Products} />
                 <Route path="/" component={Home} exact />
             </Container>
         </main>

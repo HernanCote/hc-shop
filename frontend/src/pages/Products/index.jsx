@@ -115,12 +115,12 @@ const Products = ({
                 </thead>
                 <tbody>
                   {products.map(product => (
-                    <tr key={product._id}>
-                      <td>{product._id}</td>
-                      <td>{product.name}</td>
-                      <td>${product.price}</td>
-                      <td>{product.category}</td>
-                      <td>{product.brand}</td>
+                    <tr key={product?._id}>
+                      <td>{product?._id}</td>
+                      <td>{product?.name}</td>
+                      <td>${product?.price}</td>
+                      <td>{product?.category}</td>
+                      <td>{product?.brand}</td>
                       <td>
                         <LinkContainer to={`/admin/products/${product._id}/edit`}>
                           <Button

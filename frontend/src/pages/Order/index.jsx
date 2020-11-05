@@ -20,7 +20,7 @@ import {
   payOrder,
 } from '../../actions';
 
-import { ORDER_PAY_RESET } from '../../constants';
+import { ORDER_CREATE_RESET, ORDER_PAY_RESET } from '../../constants';
 
 import { addDecimals } from '../../utils';
 
@@ -76,6 +76,7 @@ const Order = ({
 
   const successPaymentHandler = paymentResult => {
     dispatch(payOrder(orderId, paymentResult));
+    dispatch({ type: ORDER_CREATE_RESET });
   };
 
   return loading

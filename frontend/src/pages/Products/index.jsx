@@ -15,8 +15,11 @@ import Loader from '../../components/Loader';
 
 import {
   deleteProduct,
-  listProducts
+  listProducts,
+  createProduct,
 } from '../../actions';
+
+import { PRODUCT_CREATE_RESET } from '../../constants';
 
 const Products = ({
   history,
@@ -27,15 +30,35 @@ const Products = ({
 
   const dispatch = useDispatch();
 
-  const { productList, userLogin, productDelete } = useSelector(state => state);
+  const { productList, userLogin, productDelete, productCreate } = useSelector(state => state);
 
   const { loading, error, products = [] } = productList;
   const { userInfo } = userLogin;
-  const { loading: loadingDelete, error: errorDelete, success: successDelete } = productDelete;
+  const {
+    loading: loadingDelete,
+    error: errorDelete,
+    success: successDelete
+  } = productDelete;
+  const {
+    loading: loadingCreate,
+    error: errorCreate,
+    success: successCreate,
+    product: createdProduct,
+  } = productCreate;
 
   useEffect(() => {
-    userInfo && userInfo.isAdmin ? dispatch(listProducts()) : history.push('/login');
-  }, [successDelete, userInfo, dispatch, history]);
+    dispatch({ type: PRODUCT_CREATE_RESET });
+    if (!userInfo?.isAdmin) {
+      history.push('/login');
+    }
+
+    if (successCreate) {
+      history.push(`/admin/products/${createdProduct._id}/edit`)
+    } else {
+      dispatch(listProducts());
+    }
+
+  }, [successCreate, createdProduct, successDelete, userInfo, dispatch, history]);
 
   const openModal = (product) => {
     setShowModal(true);
@@ -43,7 +66,7 @@ const Products = ({
   };
 
   const createProductHandler = () => {
-
+    dispatch(createProduct());
   };
 
   const deleteProductHandler = () => {
@@ -90,7 +113,8 @@ const Products = ({
         </Col>
       </Row>
       {errorDelete && <Message variant="danger">{errorDelete}</Message>}
-      {loading || loadingDelete
+      {errorCreate && <Message variant="danger">{errorCreate}</Message>}
+      {loading || loadingDelete || loadingCreate
         ? <Loader />
         : error
           ? <Message variant="danger">{error}</Message>

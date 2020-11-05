@@ -18,6 +18,7 @@ import Order from './pages/Order';
 import Users from './pages/Users';
 import UserEdit from './pages/UserEdit';
 import Products from './pages/Products';
+import ProductEdit from './pages/ProductEdit';
 
 const App = () => (
     <Router>
@@ -35,7 +36,8 @@ const App = () => (
                 <Route path="/order/:id" component={Order} />
                 <Route path="/admin/users/:id/edit" component={UserEdit} />
                 <Route path="/admin/users" exact component={Users} />
-                <Route path="/admin/products" component={Products} />
+                <Route path="/admin/products/:id/edit" component={ProductEdit} />
+                <Route path="/admin/products" exact component={Products} />
                 <Route path="/" component={Home} exact />
             </Container>
         </main>

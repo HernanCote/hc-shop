@@ -8,6 +8,7 @@ import {
   Col,
   ListGroup,
   Image,
+  Button,
 } from 'react-bootstrap';
 
 import { PayPalButton } from 'react-paypal-button-v2';
@@ -18,9 +19,14 @@ import Loader from '../../components/Loader';
 import {
   getOrderDetails,
   payOrder,
+  orderDelivered as orderDelivery,
 } from '../../actions';
 
-import { ORDER_CREATE_RESET, ORDER_PAY_RESET } from '../../constants';
+import {
+  ORDER_CREATE_RESET,
+  ORDER_PAY_RESET,
+  ORDER_DELIVERED_RESET,
+} from '../../constants';
 
 import { addDecimals } from '../../utils';
 
@@ -33,14 +39,17 @@ const Order = ({
 
   const dispatch = useDispatch();
 
-  const orderDetails = useSelector(state => state.orderDetails);
+  const {
+    orderDetails,
+    orderPay,
+    userLogin,
+    orderDelivered
+  } = useSelector(state => state);
+
   const { order, loading, error } = orderDetails;
-
-  const orderPay = useSelector(state => state.orderPay);
   const { loading: loadingPay, success: successPay } = orderPay;
-
-  const userLogin = useSelector(state => state.userLogin);
   const { userInfo } = userLogin;
+  const { loading: loadingDeliver, success: successDeliver } = orderDelivered;
 
   useEffect(() => {
     if (!userInfo) {
@@ -58,8 +67,9 @@ const Order = ({
       document.body.appendChild(script);
     };
 
-    if (!order || order._id !== orderId || successPay) {
+    if (!order || order._id !== orderId || successPay || successDeliver) {
       dispatch({ type: ORDER_PAY_RESET })
+      dispatch({ type: ORDER_DELIVERED_RESET })
       dispatch(getOrderDetails(orderId))
     } else if (!order.isPaid) {
       if (!window.paypal) {
@@ -68,7 +78,7 @@ const Order = ({
         setSdkReady(true);
       }
     }
-  }, [order, orderId, dispatch, userInfo, history, successPay]);
+  }, [successDeliver, order, orderId, dispatch, userInfo, history, successPay]);
 
   if (!loading && order) {
     order.itemsPrice = addDecimals(order?.orderItems.reduce((acc, item) => acc + item.price * item.qty, 0));
@@ -77,6 +87,10 @@ const Order = ({
   const successPaymentHandler = paymentResult => {
     dispatch(payOrder(orderId, paymentResult));
     dispatch({ type: ORDER_CREATE_RESET });
+  };
+
+  const deliverHandler = () => {
+    dispatch(orderDelivery(order));
   };
 
   return loading
@@ -181,6 +195,22 @@ const Order = ({
                     )}
                   </ListGroup.Item>
                 )}
+                {loadingDeliver && <Loader />}
+                {
+                  userInfo?.isAdmin
+                  && order.isPaid
+                  && !order.isDelivered
+                  && !loadingDeliver
+                  && (
+                    <ListGroup.Item>
+                      <Button
+                        type="button"
+                        className="btn btn-block"
+                        onClick={deliverHandler}
+                      >Flag as delivered</Button>
+                    </ListGroup.Item>
+                  )
+                }
               </ListGroup>
             </Card>
           </Col>

@@ -11,7 +11,10 @@ import {
     Badge,
 } from 'react-bootstrap';
 
+import SearchBox from '../SearchBox';
+
 import { logout } from '../../actions/userActions';
+
 
 const Header = () => {
     const dispatch = useDispatch();
@@ -39,6 +42,7 @@ const Header = () => {
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav className="ml-auto">
+                            <SearchBox />
                             <LinkContainer to="/cart">
                                 <Nav.Link>
                                     <i className="fas fa-shopping-cart"></i>

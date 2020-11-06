@@ -12,7 +12,10 @@ import Message from '../../components/Message';
 
 import { listProducts } from '../../actions';
 
-const Home = () => {
+const Home = ({
+  match,
+}) => {
+  const keyword = match.params.keyword;
 
   const dispatch = useDispatch();
   const productList = useSelector(state => state.productList);
@@ -20,8 +23,8 @@ const Home = () => {
   const { loading, error, products = [] } = productList;
 
   useEffect(() => {
-    dispatch(listProducts());
-  }, [dispatch]);
+    dispatch(listProducts(keyword));
+  }, [dispatch, keyword]);
 
   return (
     <>
@@ -33,7 +36,7 @@ const Home = () => {
           :
           (
             <>
-              {products.length === 0 && <Message variant="info">There are no products at the moment</Message>}
+              {products.length === 0 && <Message variant="info">{keyword?.trim() ? `Searching by ${keyword} lead no results` : 'There are no products at the moment'}</Message>}
               <Row>
                 {products.map((product, idx) => (
                   <Col key={idx} sm={12} md={6} lg={4} xl={3}>

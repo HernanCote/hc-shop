@@ -10,6 +10,7 @@ import Product from '../../components/Product';
 import Loader from '../../components/Loader';
 import Message from '../../components/Message';
 import Pagination from '../../components/Pagination';
+import ProductCarousel from '../../components/ProductCarousel'
 
 import { listProducts } from '../../actions';
 
@@ -35,6 +36,7 @@ const Home = ({
 
   return (
     <>
+      {!keyword && <ProductCarousel />}
       <h1>Latest products</h1>
       {loading
         ? (<Loader />)

@@ -12,6 +12,7 @@ const {
   updateProduct,
   createProduct,
   createProductReview,
+  getTopProducts,
 } = require('../../controllers/products');
 
 const router = express.Router();
@@ -19,6 +20,9 @@ const router = express.Router();
 router.route('/')
   .get(getProducts)
   .post(protect, isAdmin, createProduct);
+
+router.route('/top')
+  .get(getTopProducts);
 
 router.route('/:id/reviews')
   .post(protect, createProductReview);

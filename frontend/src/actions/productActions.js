@@ -217,16 +217,9 @@ export const listTopProducts = () => async (dispatch, getState) => {
       type: PRODUCT_TOP_REQUEST
     });
 
-    const {
-      userLogin: {
-        userInfo
-      }
-    } = getState();
-
     const config = {
       headers: {
         Accept: 'application/json',
-        Authorization: `Bearer ${userInfo.token}`,
       },
     };
 

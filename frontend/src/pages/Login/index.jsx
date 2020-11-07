@@ -21,7 +21,8 @@ const Login = ({
   const userLogin = useSelector(state => state.userLogin);
   const { loading, error, userInfo } = userLogin;
 
-  const redirect = location.search ? location.search.split("=")[1] : '/';
+  const query = new URLSearchParams(location.search);
+  const redirect = query.get('redirect') ?? '/';
 
   useEffect(() => {
     if (userInfo) {

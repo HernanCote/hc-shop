@@ -1,14 +1,22 @@
-import React, { useState } from 'react'
-import { useHistory } from 'react-router-dom'
+import React from 'react'
+import { useHistory, useLocation } from 'react-router-dom'
 
 import { Form } from 'react-bootstrap';
 
 const SearchBox = () => {
   const history = useHistory();
+  const location = useLocation();
+  const query = new URLSearchParams(location.search);
+
+  const pageNumber = query.get('page');
+  const pageSize = query.get('pageSize');
 
   const submitHandler = keyword => {
     if (keyword.trim()) {
-      history.push(`/search/${keyword}`);
+      history.push({
+        pathname: '/',
+        search: `?search=${keyword}` + (pageNumber ? `&pageNumber=${pageNumber}` : '') + (pageSize ? `&pageSize=${pageSize}` : '')
+      });
     } else {
       history.push('/');
     }
@@ -19,6 +27,7 @@ const SearchBox = () => {
       inline
     >
       <Form.Control
+        autoComplete="off"
         size="sm"
         type="text"
         name="q"

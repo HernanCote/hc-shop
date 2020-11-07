@@ -29,16 +29,10 @@ const Profile = ({
 
   const dispatch = useDispatch();
 
-  const userDetails = useSelector(state => state.userDetails);
+  const { userDetails, userUpdateProfile, myOrdersList, userLogin } = useSelector(state => state);
   const { loading, error, user } = userDetails;
-
-  const userLogin = useSelector(state => state.userLogin);
   const { userInfo } = userLogin;
-
-  const userUpdateProfile = useSelector(state => state.userUpdateProfile);
   const { success } = userUpdateProfile;
-
-  const myOrdersList = useSelector(state => state.myOrdersList);
   const {
     loading: loadingOrders,
     error: errorOrders,
@@ -53,8 +47,8 @@ const Profile = ({
         dispatch(getUserDetails('profile'))
         dispatch(myOrdersListAction());
       } else {
-        setName(user.name);
-        setEmail(user.email);
+        setName(userInfo.name);
+        setEmail(userInfo.email);
       }
     }
   }, [dispatch, history, userInfo, user]);

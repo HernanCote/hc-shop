@@ -9,22 +9,29 @@ import {
 import Product from '../../components/Product';
 import Loader from '../../components/Loader';
 import Message from '../../components/Message';
+import Pagination from '../../components/Pagination';
 
 import { listProducts } from '../../actions';
 
 const Home = ({
   match,
+  location
 }) => {
-  const keyword = match.params.keyword;
+  const query = new URLSearchParams(location.search);
+
+  const pageNumber = query.get('page') ?? 1;
+  const pageSize = query.get('pageSize') ?? 10;
+  const keyword = query.get('search') ?? '';
+
 
   const dispatch = useDispatch();
   const productList = useSelector(state => state.productList);
 
-  const { loading, error, products = [] } = productList;
+  const { loading, error, products = [], page, pages } = productList;
 
   useEffect(() => {
-    dispatch(listProducts(keyword));
-  }, [dispatch, keyword]);
+    dispatch(listProducts(keyword, pageNumber, pageSize));
+  }, [dispatch, keyword, pageNumber, pageSize]);
 
   return (
     <>
@@ -44,6 +51,12 @@ const Home = ({
                   </Col>
                 ))}
               </Row>
+              <Pagination
+                page={page}
+                pages={pages}
+                pageSize={pageSize}
+                keyword={keyword ?? ''}
+              />
             </>
           )
       }

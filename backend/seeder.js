@@ -1,16 +1,15 @@
-const mongoose = require('mongoose');
-const dotenv = require('dotenv');
-const colors = require('colors');
+import mongoose from 'mongoose';
+import dotenv from 'dotenv';
+import colors from 'colors';
 
-const users = require('./data/users.js');
-const products = require('./data/products.js');
+import users from './data/users.js';
+import products from './data/products.js';
 
-const User = require('./models/user.js');
-const Product = require('./models/product.js');
-const order = require('./models/order.js');
+import User from './models/user.js';
+import Product from './models/product.js';
+import Order from './models/order.js';
 
-const connectDB = require('./config/db.js');
-const Order = require('./models/order.js');
+import connectDB from './config/db.js';
 
 dotenv.config();
 

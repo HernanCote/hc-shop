@@ -1,11 +1,11 @@
-const express = require('express');
+import express from 'express';
 
-const {
+import {
   protect,
   isAdmin,
-} = require('../../middleware/auth');
+} from '../../middleware/auth.js';
 
-const {
+import {
   getProducts,
   getProductById,
   deleteProduct,
@@ -13,7 +13,7 @@ const {
   createProduct,
   createProductReview,
   getTopProducts,
-} = require('../../controllers/products');
+} from '../../controllers/products/index.js';
 
 const router = express.Router();
 
@@ -32,5 +32,4 @@ router.route('/:id')
   .put(protect, isAdmin, updateProduct)
   .delete(protect, isAdmin, deleteProduct);
 
-
-module.exports = router;
+export default router;

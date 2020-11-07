@@ -1,5 +1,6 @@
-const asyncHandler = require('express-async-handler');
-const Order = require('../../models/order');
+import asyncHandler from 'express-async-handler';
+
+import Order from '../../models/order.js';
 
 // @desc    Create new order
 // @route   POST api/orders
@@ -109,7 +110,7 @@ const getOrders = asyncHandler(async (req, res) => {
   return res.status(200).json(orders);
 });
 
-module.exports = {
+export {
   addOrderItems,
   getOrderById,
   updateOrderToPaid,

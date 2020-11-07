@@ -1,5 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
+
 
 import {
   Row,
@@ -11,11 +13,11 @@ import Loader from '../../components/Loader';
 import Message from '../../components/Message';
 import Pagination from '../../components/Pagination';
 import ProductCarousel from '../../components/ProductCarousel'
+import Meta from '../../components/Meta';
 
 import { listProducts } from '../../actions';
 
 const Home = ({
-  match,
   location
 }) => {
   const query = new URLSearchParams(location.search);
@@ -36,8 +38,11 @@ const Home = ({
 
   return (
     <>
-      {!keyword && <ProductCarousel />}
-      <h1>Latest products</h1>
+      <Meta
+        title="Welcome to ProShop | Home"
+      />
+      {!keyword ? <ProductCarousel /> : <Link to="/" className="btn btn-light">Go Back</Link>}
+      {!keyword ? <h1>Latest products</h1> : <h1>Results for {keyword}</h1>}
       {loading
         ? (<Loader />)
         : error

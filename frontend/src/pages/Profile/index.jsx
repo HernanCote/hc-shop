@@ -18,6 +18,8 @@ import {
   myOrdersList as myOrdersListAction,
 } from '../../actions';
 
+import { USER_UPDATE_PROFILE_RESET } from '../../constants';
+
 const Profile = ({
   history,
 }) => {
@@ -43,7 +45,8 @@ const Profile = ({
     if (!userInfo) {
       history.push('/');
     } else {
-      if (!user?.name) {
+      if (!user?.name || success) {
+        dispatch({ type: USER_UPDATE_PROFILE_RESET });
         dispatch(getUserDetails('profile'))
         dispatch(myOrdersListAction());
       } else {
@@ -51,7 +54,7 @@ const Profile = ({
         setEmail(userInfo.email);
       }
     }
-  }, [dispatch, history, userInfo, user]);
+  }, [dispatch, success, history, userInfo, user]);
 
   const submitHandler = (e) => {
     e.preventDefault();
